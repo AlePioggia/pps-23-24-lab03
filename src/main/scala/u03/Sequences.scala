@@ -46,7 +46,7 @@ object Sequences: // Essentially, generic linkedlists
       case _ => Nil()
     )
 
-    def alternativeMap[A, B](l: Sequence[A])(mapper: A => B): Sequence[B] = flatMap(l)(v => Cons(mapper(v), Nil()))
+    def alternativeMap[A, B](l: Sequence[A])(mapper: A => B): Sequence[B] = flatMap(l)(a => Cons(mapper(a), Nil()))
     
     def min(l: Sequence[Int]): Optional[Int] = l match
       case Cons(h1, Cons(h2, t)) if (h1 > h2) => min(Cons(h2, t))
