@@ -9,6 +9,7 @@ import u02.Modules.Person.Teacher
 import u02.Modules.Person.Student
 import u03.Sequences.*
 import Sequence.*
+import tasks.Task2.getCourses
 
 
 class Task2Test:
