@@ -40,9 +40,15 @@ object Sequences: // Essentially, generic linkedlists
     def flatMap[A, B](l: Sequence[A])(mapper: A => Sequence[B]): Sequence[B] = l match
       case Cons(h, t) => concat(mapper(h), flatMap(t)(mapper))
       case _ => Nil()
+
+    def alternativeFilter[A](l1: Sequence[A])(pred: A => Boolean): Sequence[A] = flatMap(l1)(v => v match
+      case exp if pred(exp) => Cons(exp, Nil())
+      case _ => Nil()
+    )
+
+    def alternativeMap[A, B](l: Sequence[A])(mapper: A => B): Sequence[B] = flatMap(l)(v => Cons(mapper(v), Nil()))
     
     def min(l: Sequence[Int]): Optional[Int] = ???
-    
     
 @main def trySequences =
   import Sequences.* 
