@@ -48,7 +48,13 @@ object Streams extends App :
     def fill[A](n: Int)(a: A): Stream[A] = n match 
       case n if n > 0 => Cons(() => a, () => fill(n - 1)(a))
       case 0 => Empty()
-    
+
+    def getPellNumber(n: Int): Int = n match
+      case n if n <= 2 => n
+      case _ => 2 * getPellNumber(n - 1) + getPellNumber(n - 2)   
+
+    def pell[A](): Stream[Int] = 
+      map(Stream.iterate(0)(_ + 1))(getPellNumber(_))
 
   end Stream
 

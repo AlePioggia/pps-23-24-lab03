@@ -32,3 +32,6 @@ class StreamTest:
   @Test def testFill(): Unit = 
     assertEquals(toList(Stream.fill(3)('a')), Cons ('a', Cons ('a',Cons ('a', Nil ()))))
     assertEquals(toList(Stream.fill(3)(5)), Cons (5, Cons (5,Cons (5, Nil ()))))
+
+  @Test def testPellNumbers(): Unit = 
+    assertEquals(Stream.toList(Stream.take(pell())(5)), Cons(0, Cons (1, Cons(2, Cons(5, Cons(12, Nil ()))))))
