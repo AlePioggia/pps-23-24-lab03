@@ -12,4 +12,8 @@ object Task2 extends App:
         val teachers = filter(l)(!isStudent(_))
         map(teachers)(x => course(x))
 
+    def foldLeft(seq: Sequence[Int])(i: Int)(f: (Int, Int) => Int): Int = seq match
+        case Cons(h, t) => f(foldLeft(t)(i)(f), h)
+        case _ => i
+    
 
