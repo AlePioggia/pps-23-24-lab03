@@ -17,4 +17,4 @@ class Task2Test:
     val l: Sequence[Person] = Cons(Student("Mario", 10), Cons(Teacher("Maria", "karl"), Cons(Student("Milena", 12), Nil())))
 
     @Test def testGetCourses() =
-        assertEquals(getCourses(l), Cons(Student("Mario", 10), Cons(Student("Milena", 12), Nil())))
+        assertEquals(getCourses(l), Cons("karl", Nil()))
