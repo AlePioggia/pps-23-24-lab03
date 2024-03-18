@@ -48,8 +48,13 @@ object Sequences: // Essentially, generic linkedlists
 
     def alternativeMap[A, B](l: Sequence[A])(mapper: A => B): Sequence[B] = flatMap(l)(v => Cons(mapper(v), Nil()))
     
-    def min(l: Sequence[Int]): Optional[Int] = ???
-    
+    def min(l: Sequence[Int]): Optional[Int] = l match
+      case Cons(h1, Cons(h2, t)) if (h1 > h2) => min(Cons(h2, t))
+      case Cons(h1, Cons(h2, t)) if (h1 < h2) => min(Cons(h1, t))
+      case Cons(h, _) => Optional.Just(h)
+      case Nil() => Optional.Empty()
+
+
 @main def trySequences =
   import Sequences.* 
   val l = Sequence.Cons(10, Sequence.Cons(20, Sequence.Cons(30, Sequence.Nil())))
