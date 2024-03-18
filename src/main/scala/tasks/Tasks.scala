@@ -1,30 +1,7 @@
-package u03
+package tasks
 
-import u02.AnonymousFunctions.l
-import u03.Optionals.Optional
-
-object Sequences: // Essentially, generic linkedlists
-  
-  enum Sequence[E]:
-    case Cons(head: E, tail: Sequence[E])
-    case Nil()
-
-  object Sequence:
-
-    def sum(l: Sequence[Int]): Int = l match
-      case Cons(h, t) => h + sum(t)
-      case _          => 0
-
-    def map[A, B](l: Sequence[A])(mapper: A => B): Sequence[B] = l match
-      case Cons(h, t) => Cons(mapper(h), map(t)(mapper))
-      case Nil()      => Nil()
-
-    def filter[A](l1: Sequence[A])(pred: A => Boolean): Sequence[A] = l1 match
-      case Cons(h, t) if pred(h) => Cons(h, filter(t)(pred))
-      case Cons(_, t)            => filter(t)(pred)
-      case Nil()                 => Nil()
-
-    // Lab 03
+object Tasks extends App:
+    //Task 1
     def zip[A, B](first: Sequence[A], second: Sequence[B]): Sequence[(A, B)] = (first, second) match
       case (Cons(h1, t1), Cons(h2, t2)) => Cons((h1, h2), zip(t1, t2))
       case _ => Nil()
@@ -57,12 +34,31 @@ object Sequences: // Essentially, generic linkedlists
       case Cons(h, _) => Optional.Just(h)
       case Nil() => Optional.Empty()
 
+    //Task 2
 
-@main def trySequences =
-  import Sequences.* 
-  val l = Sequence.Cons(10, Sequence.Cons(20, Sequence.Cons(30, Sequence.Nil())))
-  println(Sequence.sum(l)) // 30
+    def getCourses(l: Sequence[Person]): Sequence[String] = 
+        val teachers = filter(l)(!isStudent(_))
+        map(teachers)(x => course(x))
 
-  import Sequence.*
+    def foldLeft(seq: Sequence[Int])(i: Int)(f: (Int, Int) => Int): Int = seq match
+        case Cons(h, t) => f(foldLeft(t)(i)(f), h)
+        case _ => i
 
-  println(sum(map(filter(l)(_ >= 20))(_ + 1))) // 21+31 = 52
+    //Task 3
+
+    def takeWhile[A](stream: Stream[A])(pred: A => Boolean): Stream[A] = stream match
+      case Cons(head, tail) if pred(head()) => cons(head(), takeWhile(tail())(pred))
+      case _ => Empty()
+
+    def fill[A](n: Int)(a: A): Stream[A] = n match 
+      case n if n > 0 => Cons(() => a, () => fill(n - 1)(a))
+      case 0 => Empty()
+
+    def getPellNumber(n: Int): Int = n match
+      case n if n <= 2 => n
+      case _ => 2 * getPellNumber(n - 1) + getPellNumber(n - 2)   
+
+    def pell[A](): Stream[Int] = 
+      map(Stream.iterate(0)(_ + 1))(getPellNumber(_))
+
+
