@@ -1,5 +1,7 @@
 package u03
 
+import u02.Values.s
+
 object Streams extends App :
 
   import Sequences.*
@@ -42,6 +44,11 @@ object Streams extends App :
     def takeWhile[A](stream: Stream[A])(pred: A => Boolean): Stream[A] = stream match
       case Cons(head, tail) if pred(head()) => cons(head(), takeWhile(tail())(pred))
       case _ => Empty()
+
+    def fill[A](n: Int)(a: A): Stream[A] = n match 
+      case n if n > 0 => Cons(() => a, () => fill(n - 1)(a))
+      case 0 => Empty()
+    
 
   end Stream
 

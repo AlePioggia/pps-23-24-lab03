@@ -12,3 +12,4 @@ object Task2 extends App:
         val teachers = filter(l)(!isStudent(_))
         map(teachers)(x => course(x))
 
+
